@@ -11,3 +11,7 @@
 .item a.activeLink{
   color: gold;
 }
+.friendsItem{
+  display: flex;
+  justify-content: space-between;
+}

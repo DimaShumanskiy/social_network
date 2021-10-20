@@ -9,8 +9,11 @@ type MyPostsType =  {
 }
 
 const MyPosts = (props: MyPostsType) => {
-    let postsElements =
-        props.posts.map(p => <Post  message={p.message} likesCount={p.likesCount}/>)
+
+    let postsElements = props.posts.map(p => <Post  message={p.message} likesCount={p.likesCount}/>)
+    let addPost = () => {
+
+    }
     return (
         <div className={s.postsBlock}>
             <h3>My post </h3>
@@ -18,7 +21,7 @@ const MyPosts = (props: MyPostsType) => {
                 <div>
                     <input/>
                 </div>
-                <button>Add post</button>
+                <button onClick={addPost}>Add post</button>
                 <button>Remove</button>
             </div>
             <div className={s.posts}>
