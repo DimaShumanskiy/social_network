@@ -2,6 +2,8 @@
 // берем типизацию из Dialogs
 //type post data "MyPost"
 
+import {rerenderEntireTree} from "../render";
+
 export type PostType = {
     id: number,
     message: string,
@@ -19,6 +21,9 @@ export type FriendsType = {
     id: number
     name: string
 }
+type NewPostTextType = {
+    newPostText: string
+}
 export type SideBarType = {
     friends: Array<FriendsType>
 }
@@ -28,6 +33,8 @@ export type DialogsPageType = {
 }
 export type ProfilePageType = {
     posts: Array<PostType>
+    newPostText: string
+
 }
 export type StateType = {
     dialogsPage: DialogsPageType
@@ -58,7 +65,8 @@ let state: StateType = {
         posts: [
             {id: 1, message: "Hi,how are you?", likesCount: 5},
             {id: 2, message: "It's my first post", likesCount: 11},
-        ]
+        ],
+        newPostText: "aa"
     },
     sideBar: {
         friends: [
@@ -68,6 +76,21 @@ let state: StateType = {
         ]
     }
 
+}
+
+export const addPost = (postMessage: string ) => {
+    let newPost: PostType = {
+        id:5 ,
+        message: state.profilePage.newPostText,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ('')
+    rerenderEntireTree(state)
+}
+export const updateNewPostText = (newText: string ) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
 }
 
 export default state;
