@@ -1,8 +1,11 @@
 // interface dialogsType extends GeneralDialogsType {}
 // берем типизацию из Dialogs
 //type post data "MyPost"
+import {stat} from "fs";
 
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = () => {
+    console.log("aaa")
+}
 
 export type PostType = {
     id: number,
@@ -20,9 +23,6 @@ export type MessageType = {
 export type FriendsType = {
     id: number
     name: string
-}
-type NewPostTextType = {
-    newPostText: string
 }
 export type SideBarType = {
     friends: Array<FriendsType>
@@ -42,7 +42,7 @@ export type StateType = {
     sideBar: SideBarType
 }
 
-let state: StateType = {
+const state: StateType = {
     dialogsPage: {
         dialogs: [
             {id: 1, name: "Dimych"},
@@ -66,7 +66,7 @@ let state: StateType = {
             {id: 1, message: "Hi,how are you?", likesCount: 5},
             {id: 2, message: "It's my first post", likesCount: 11},
         ],
-        newPostText: "aa"
+        newPostText: ""
     },
     sideBar: {
         friends: [
@@ -78,19 +78,24 @@ let state: StateType = {
 
 }
 
-export const addPost = (postMessage: string ) => {
+export const addPost = () => {
     let newPost: PostType = {
-        id:5 ,
+        id: 5,
         message: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ('')
-    rerenderEntireTree(state)
+    rerenderEntireTree()
 }
-export const updateNewPostText = (newText: string ) => {
+export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
-    rerenderEntireTree(state)
+    rerenderEntireTree()
+}
+
+
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer
 }
 
 export default state;
