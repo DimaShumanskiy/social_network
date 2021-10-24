@@ -1,11 +1,7 @@
 // interface dialogsType extends GeneralDialogsType {}
 // берем типизацию из Dialogs
 //type post data "MyPost"
-import {stat} from "fs";
 
-let rerenderEntireTree = () => {
-    console.log("aaa")
-}
 
 export type PostType = {
     id: number,
@@ -36,66 +32,94 @@ export type ProfilePageType = {
     newPostText: string
 
 }
-export type StateType = {
+export type RootStateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
     sideBar: SideBarType
 }
+export type StoreType = {
+    _state: RootStateType
+    _callSubscriber: (store: StoreType) => void
+    subscribe: (observer: (store: StoreType) => void) => void
+    getState: () => RootStateType
+    dispatch: (action: ActionsTypes) => void
+}
 
-const state: StateType = {
-    dialogsPage: {
-        dialogs: [
-            {id: 1, name: "Dimych"},
-            {id: 2, name: "Andrey"},
-            {id: 3, name: "Sveta"},
-            {id: 4, name: "Shasa"},
-            {id: 5, name: "Viktor"},
-            {id: 6, name: "Valera"}
-        ],
-        messages: [
-            {id: 1, message: "YO"},
-            {id: 2, message: "HI"},
-            {id: 3, message: "PRIVET"},
-            {id: 4, message: "YO"},
-            {id: 5, message: "YO"},
-            {id: 6, message: "YO"}
-        ]
+type AddPostActionType = {
+    type: 'ADD-POST'
+    postText: string
+}
+type ChangeNewPostActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+export type ActionsTypes = AddPostActionType | ChangeNewPostActionType
+
+let store: StoreType = {
+    _state: {
+        dialogsPage: {
+            dialogs: [
+                {id: 1, name: "Dimych"},
+                {id: 2, name: "Andrey"},
+                {id: 3, name: "Sveta"},
+                {id: 4, name: "Shasa"},
+                {id: 5, name: "Viktor"},
+                {id: 6, name: "Valera"}
+            ],
+            messages: [
+                {id: 1, message: "YO"},
+                {id: 2, message: "HI"},
+                {id: 3, message: "PRIVET"},
+                {id: 4, message: "YO"},
+                {id: 5, message: "YO"},
+                {id: 6, message: "YO"}
+            ]
+        },
+        profilePage: {
+            posts: [
+                {id: 1, message: "Hi,how are you?", likesCount: 5},
+                {id: 2, message: "It's my first post", likesCount: 11},
+            ],
+            newPostText: ""
+        },
+        sideBar: {
+            friends: [
+                {id: 1, name: "Dimych"},
+                {id: 2, name: "Andrey"},
+                {id: 3, name: "Andrey"}
+            ]
+        }
+
     },
-    profilePage: {
-        posts: [
-            {id: 1, message: "Hi,how are you?", likesCount: 5},
-            {id: 2, message: "It's my first post", likesCount: 11},
-        ],
-        newPostText: ""
+    _callSubscriber() {
+        console.log("state changed")
     },
-    sideBar: {
-        friends: [
-            {id: 1, name: "Dimych"},
-            {id: 2, name: "Andrey"},
-            {id: 3, name: "Andrey"}
-        ]
+    getState() {
+        return this._state
+    },
+    subscribe(observer) {
+        this._callSubscriber = observer // observer - callback
+    },
+    dispatch(action) {  // action это обьект который имеет {type: ' '}
+        if (action.type === 'ADD-POST') {
+            let newPost: PostType = {
+                id: 5,
+                message: action.postText
+                // this._state.profilePage.newPostText
+                ,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ('')
+            this._callSubscriber(store)
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(store)
+        }
     }
-
-}
-
-export const addPost = () => {
-    let newPost: PostType = {
-        id: 5,
-        message: state.profilePage.newPostText,
-        likesCount: 0
-    }
-    state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText = ('')
-    rerenderEntireTree()
-}
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireTree()
 }
 
 
-export const subscribe = (observer: any) => {
-    rerenderEntireTree = observer
-}
-
-export default state;
+export default store;
+// window.store = store;
+// store -- OOP
