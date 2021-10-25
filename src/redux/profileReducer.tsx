@@ -1,4 +1,4 @@
-import {PostType, ProfilePageType} from "./state";
+import {PostType, ProfilePageType} from "./store";
 
 
 const profileReducer = (state: ProfilePageType, action: any) => {

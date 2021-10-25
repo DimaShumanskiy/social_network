@@ -1,4 +1,4 @@
-import {SideBarType} from "./state";
+import {SideBarType} from "./store";
 
 const sideBarReducer = (state: SideBarType, action: any) => {
 
