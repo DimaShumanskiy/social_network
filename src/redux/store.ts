@@ -60,7 +60,7 @@ export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
 
-    let store: StoreType = {
+let store: StoreType = {
     _state: {
         dialogsPage: {
             dialogs: [

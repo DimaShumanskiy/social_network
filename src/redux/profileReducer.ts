@@ -1,7 +1,15 @@
 import {PostType, ProfilePageType} from "./store";
 
 
-const profileReducer = (state: ProfilePageType, action: any) => {
+let initialState = {
+    posts: [
+        {id: 1, message: "Hi,how are you?", likesCount: 5},
+        {id: 2, message: "It's my first post", likesCount: 11},
+    ],
+    newPostText: '',
+}
+
+const profileReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case 'ADD-POST':
             let newPost: PostType = {
