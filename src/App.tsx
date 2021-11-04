@@ -13,9 +13,9 @@ import {Dispatch, Store} from "redux";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    state: rootReducerType
-    dispatch: Dispatch
-    store: Store
+    // state: rootReducerType
+    // dispatch: Dispatch
+    // store: Store
 }
 
 const App = (props: AppPropsType) => {
@@ -23,18 +23,20 @@ const App = (props: AppPropsType) => {
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar sideBar={props.state.sideBar}/>
+                <Navbar
+                    // sideBar={props.state.sideBar}
+                />
                 <div className="app-wrapper-content">
 
                     <Route path="/profile"
                            render={() => <Profile
-                               store={props.store}
+                               // store={props.store}
                                // profilePage={props.state.profilePage}
                                // dispatch={props.dispatch}
                            />}/>
                     <Route path="/dialogs"
                            render={() => <DialogsContainer
-                               store={props.store}
+                               // store={props.store}
                            />}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>

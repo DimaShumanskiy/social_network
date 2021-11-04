@@ -5,12 +5,12 @@ import Friend from "./Friends/Friends";
 import {SideBarType} from "../../redux/store";
 
 type NavbarPopsType = {
-    sideBar: SideBarType
+    // sideBar: SideBarType
 }
 
 function Navbar(props: NavbarPopsType) {
 
-    let friends = props.sideBar.friends.map(p => <Friend nameFriend={p.name}/>)
+    // let friends = props.sideBar.friends.map(p => <Friend nameFriend={p.name}/>)
 
     return (
         <nav className={s.nav}>
@@ -30,10 +30,10 @@ function Navbar(props: NavbarPopsType) {
                 <NavLink to="/settings" activeClassName={s.activeLink}>Settings</NavLink>
             </div>
             <div>
-                <h3>Friends</h3>
-                <article className={s.friendsItem}>
-                    {friends}
-                </article>
+                {/*<h3>Friends</h3>*/}
+                {/*<article className={s.friendsItem}>*/}
+                {/*    {friends}*/}
+                {/*</article>*/}
             </div>
 
         </nav>
