@@ -8,8 +8,6 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
-import {rootReducerType} from "./redux/redux-store";
-import {Dispatch, Store} from "redux";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
@@ -29,15 +27,9 @@ const App = (props: AppPropsType) => {
                 <div className="app-wrapper-content">
 
                     <Route path="/profile"
-                           render={() => <Profile
-                               // store={props.store}
-                               // profilePage={props.state.profilePage}
-                               // dispatch={props.dispatch}
-                           />}/>
+                           render={() => <Profile />}/>
                     <Route path="/dialogs"
-                           render={() => <DialogsContainer
-                               // store={props.store}
-                           />}/>
+                           render={() => <DialogsContainer />}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/settings" render={() => <Settings/>}/>
