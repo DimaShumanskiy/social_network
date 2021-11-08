@@ -14,3 +14,5 @@ export const store = createStore(reducers)
 
 export type AppStateType = typeof store;
 // export default store
+// ... - spred
+// deep copy vs shallow copy
