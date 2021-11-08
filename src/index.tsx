@@ -11,7 +11,7 @@ import {Provider} from "react-redux";
 
 
 // rootReducerType RootStateType
-const rerenderEntireTree = () => {
+// const rerenderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
@@ -20,12 +20,12 @@ const rerenderEntireTree = () => {
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
-rerenderEntireTree();
+// }
+// rerenderEntireTree();
 
-store.subscribe(() => {
-    rerenderEntireTree();
-})
+// store.subscribe(() => {
+//     rerenderEntireTree();
+// })
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
