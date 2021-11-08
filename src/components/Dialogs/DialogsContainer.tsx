@@ -9,9 +9,6 @@ import {Dispatch} from "redux";
 
 type MapStatePropsType = {
     dialogsPage: DialogsPageType
-    // store: Store
-    // dialogsPage: DialogsPageType
-    // dispatch: (action: ActionsTypes) => void
 }
 type MapDispatchPropsType = {
     updateNewMessageBody: (body:string) => void
