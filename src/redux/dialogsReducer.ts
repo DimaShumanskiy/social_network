@@ -1,4 +1,6 @@
-import {DialogsPageType} from "./store";
+import Dialogs from "../components/Dialogs/Dialogs";
+import {ActionsTypes} from "./store";
+
 
 let initialState = {
     dialogs: [
@@ -19,9 +21,10 @@ let initialState = {
     ],
     newMessageBody: ''
 }
-const dialogsReducer = (state = initialState, action: any) => {
+// export type DialogsActionsTypes = ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof sendMessageCreator>
 
-    let stateCopy;
+const dialogsReducer = (state = initialState, action: ActionsTypes) => {
+
     switch (action.type) {
         case 'UPDATE_NEW_MESSAGE_BODY':
             return {
@@ -49,14 +52,3 @@ export const updateNewMessageBodyCreator = (newMessage: string) => ({
     newMessage: newMessage
 }) as const
 export const sendMessageCreator = () => ({type: 'SEND_MESSAGE'} as const)
-
-// if (action.type === 'UPDATE_NEW_MESSAGE_BODY') {
-//     state.newMessageBody = action.newMessage
-// } else if (action.type === 'SEND_MESSAGE') {
-//     let newMessage = state.newMessageBody
-//     state.newMessageBody = ''
-//     state.messages.push({id: 10, message: newMessage})
-// }
-//
-// return state
-// }

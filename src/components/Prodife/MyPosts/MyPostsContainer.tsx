@@ -7,10 +7,6 @@ import {Dispatch} from "redux";
 
 
 type MyPostsType = {
-    // store: Store
-    // posts: Array<PostType>
-    // newPostText: string
-    // dispatch: (action: ActionsTypes) => void
 }
 const mapStateToProps = (state: rootReducerType) => {
     return {

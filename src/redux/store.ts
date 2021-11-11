@@ -50,12 +50,8 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-// type ChangeNewPostActionType = {  // переписали на синтаксис ReturnType<typeof changeNewActionCreator>
-//     type: 'UPDATE-NEW-POST-TEXT'
-//     newText: string
-// }
-
-export type ActionsTypes = ReturnType<typeof addPostActionCreator>
+export type ActionsTypes =
+      ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof changeNewActionCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
@@ -116,10 +112,6 @@ let store: StoreType = {
 
     }
 }
-// actionCreator
-
 
 export default store;
 
-// window.store = store;
-// store -- OOP

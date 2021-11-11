@@ -1,0 +1,40 @@
+.container{
+  display: flex;
+  flex-direction: column;
+}
+.itemUser{
+  display: flex;
+  margin-bottom: 10px;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  max-width:  80px;
+  margin: 10px;
+}
+.btn {
+  border-radius: 3px;
+  border: 1px silver solid;
+  width: 80px;
+}
+.avatar {
+  width: 80px;
+  border-radius: 100%;
+  margin-bottom: 10px;
+}
+.content{
+  display: flex;
+  justify-content: space-between;
+  border: 2px silver solid;
+  border-radius: 10px;
+  width: 400px;
+  padding: 10px;
+}
+h2{
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+h4{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
