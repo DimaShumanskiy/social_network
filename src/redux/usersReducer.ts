@@ -4,16 +4,24 @@ let initialState: InitialStateType = {
 
 export type UserType = {
     id: number,
-    photoURL: string,
-    follow: boolean,
-    fullName: string,
+    name: string,
     status: string,
-    location: UsersLocationType
+    photos: UserPhotosType,
+    follow: boolean,
+    // photoURL: string,
+    // location: UsersLocationType
 }
+type UserPhotosType = {
+    small: string,
+    large: string
+}
+
 type UsersLocationType = {
     city: string,
     country: string,
 }
+
+
 export type InitialStateType = {
     users: UserType[]
 }
