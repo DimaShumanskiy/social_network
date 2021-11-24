@@ -1,28 +1,33 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
 }
-.itemUser{
+
+.itemUser {
   display: flex;
   margin-bottom: 10px;
 }
+
 .left {
   display: flex;
   flex-direction: column;
-  max-width:  80px;
+  max-width: 80px;
   margin: 10px;
 }
+
 .btn {
   border-radius: 3px;
   border: 1px silver solid;
   width: 80px;
 }
+
 .avatar {
   width: 80px;
   border-radius: 100%;
   margin-bottom: 10px;
 }
-.content{
+
+.content {
   display: flex;
   justify-content: space-between;
   border: 2px silver solid;
@@ -30,11 +35,27 @@
   width: 400px;
   padding: 10px;
 }
-h3{
+
+h3 {
   margin-top: 5px;
   margin-bottom: 20px;
 }
-h5{
+
+h5 {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.selectedPageActiv {
+  color: red;
+  padding: 3px;
+
+}.selectedPage {
+   padding: 3px;
+}
+
+.pagesNumber {
+  cursor: pointer;
+  max-width: 300px;
+  overflow: hidden;
 }

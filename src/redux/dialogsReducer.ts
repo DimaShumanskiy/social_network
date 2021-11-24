@@ -1,4 +1,3 @@
-import Dialogs from "../components/Dialogs/Dialogs";
 import {ActionsTypes} from "./store";
 
 
