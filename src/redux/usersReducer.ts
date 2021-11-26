@@ -3,6 +3,7 @@ let initialState: InitialStateType = {
     pageSize: 5,
     totalUsersCount: 21,
     currentPage: 1,
+    isFetching: false,
 }
 
 export type UserType = {
@@ -29,7 +30,8 @@ export type InitialStateType = {
     users: UserType[],
     pageSize: number,
     totalUsersCount: number,
-    currentPage: number
+    currentPage: number,
+    isFetching: boolean,
 }
 
 type UsersActionTypes = ReturnType<typeof followAC>
