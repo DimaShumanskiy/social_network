@@ -51,8 +51,6 @@ export type StoreType = {
 }
 
 export type ActionsTypes =
-      ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof changeNewActionCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
 
@@ -104,7 +102,7 @@ let store: StoreType = {
     },
     dispatch(action) {  // action это обьект который имеет {type: ' '}
 
-        this._state.profilePage = profileReducer(this._state.profilePage, action); // вынесли всю логику в reducer
+        // this._state.profilePage = profileReducer(this._state.profilePage, action); // вынесли всю логику в reducer
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._state.sideBar = sideBarReducer(this._state.sideBar, action);
 

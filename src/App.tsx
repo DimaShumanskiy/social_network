@@ -9,6 +9,7 @@ import Music from "./components/Music/Music";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/NavBar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Prodife/ProfileContainer";
 
 type AppPropsType = {
 
@@ -21,7 +22,7 @@ const App = (props: AppPropsType) => {
                 <NavbarContainer/>
                 <div className="app-wrapper-content">
                     <Route path="/profile"
-                           render={() => <Profile />}/>
+                           render={() => <ProfileContainer />}/>
                     <Route path="/dialogs"
                            render={() => <DialogsContainer />}/>
                      <Route path="/users"

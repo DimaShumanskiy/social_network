@@ -1,19 +1,18 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "../../redux/profileReducer";
 
 type ProfilePropsType ={
-    // store: Store
+    profile: ProfileType  | null
 }
 
 function Profile(props: ProfilePropsType) {
     return (
-        <section>
-            <ProfileInfo/>
-            <MyPostsContainer
-                // store ={props.store}
-            />
-        </section>
+        <>
+            <ProfileInfo profile={props.profile} />
+            <MyPostsContainer/>
+        </>
     )
 }
 

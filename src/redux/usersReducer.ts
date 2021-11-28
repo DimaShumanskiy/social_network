@@ -26,7 +26,7 @@ type UsersLocationType = {
 }
 
 
-export type InitialStateType = {
+ type InitialStateType = {
     users: UserType[],
     pageSize: number,
     totalUsersCount: number,
@@ -34,12 +34,12 @@ export type InitialStateType = {
     isFetching: boolean,
 }
 
-type UsersActionTypes = ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setUsersTotalCountAC>
-    | ReturnType<typeof toggleIsFetchingAC>
+type UsersActionTypes = ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
 
 const usersReducer = (state:InitialStateType = initialState, action: UsersActionTypes): InitialStateType => {
     switch (action.type) {
@@ -76,23 +76,23 @@ const usersReducer = (state:InitialStateType = initialState, action: UsersAction
     }
 }
 
-export const followAC = (userId: number) => ({
+export const follow = (userId: number) => ({
     type: 'FOLLOW',
     userId,
 }) as const
-export const unFollowAC = (userId: number) => ({
+export const unFollow = (userId: number) => ({
     type: 'UN-FOLLOW',
     userId,
 }) as const
-export const setUsersAC = (users: Array<UserType>) => ({
+export const setUsers = (users: Array<UserType>) => ({
     type: 'SET-USERS',
     users
 }) as const
-export const setCurrentPageAC = (currentPage: number) => ({
+export const setCurrentPage = (currentPage: number) => ({
     type: 'SET-CURRENT-PAGE',currentPage }) as const
-export const setUsersTotalCountAC = (totalUsersCount:number) => ({
+export const setTotalUsersCount = (totalUsersCount:number) => ({
     type: 'SET-USERS-TOTAL-COUNT', totalUsersCount }) as const
 
-export const toggleIsFetchingAC = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING' ,isFetching}) as const
+export const toggleIsFetching = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING' ,isFetching}) as const
 export default usersReducer;
 
