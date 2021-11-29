@@ -10,6 +10,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/NavBar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Prodife/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 type AppPropsType = {
 
@@ -18,7 +19,7 @@ type AppPropsType = {
 const App = (props: AppPropsType) => {
     return (
             <div className="app-wrapper">
-                <Header/>
+                <HeaderContainer/>
                 <NavbarContainer/>
                 <div className="app-wrapper-content">
                     <Route path="/profile/:userId"
