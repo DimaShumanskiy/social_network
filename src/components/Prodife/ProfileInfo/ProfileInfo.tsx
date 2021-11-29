@@ -24,6 +24,7 @@ function ProfileInfo(props: ProfileInfoType) {
                     <img className={s.avatar}
                          src={props.profile?.photos.large === null ? avatar : props.profile?.photos.large } alt=""/>
                     <span>{props.profile.aboutMe}</span>
+                    <h3>{props.profile.fullName}</h3>
                 </div>
                 {/*<ul className={s.contact}>*/}
                 {/*    <li><a href={props.profile.contacts.facebook}>facebook</a></li>*/}
