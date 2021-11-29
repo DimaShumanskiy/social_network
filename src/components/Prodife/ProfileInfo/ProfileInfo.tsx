@@ -11,6 +11,7 @@ function ProfileInfo(props: ProfileInfoType) {
     if (!props.profile) {
         return <Preloader/>
     }
+    let avatar = "https://html5css.ru/howto/img_avatar2.png"
     return (
         <div>
             <div>
@@ -21,7 +22,7 @@ function ProfileInfo(props: ProfileInfoType) {
             <div className={s.userContent}>
                 <div className={s.descriptionBlock}>
                     <img className={s.avatar}
-                         src={props.profile?.photos.large} alt=""/>
+                         src={props.profile?.photos.large === null ? avatar : props.profile?.photos.large } alt=""/>
                     <span>{props.profile.aboutMe}</span>
                 </div>
                 {/*<ul className={s.contact}>*/}

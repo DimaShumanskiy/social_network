@@ -10,7 +10,7 @@ type NavbarPopsType = {
 
 function Navbar(props: NavbarPopsType) {
 
-    let friends = props.sideBar.friends.map(p => <Friend nameFriend={p.name}/>)
+    let friends = props.sideBar.friends.map((p,i) => <Friend key={i} nameFriend={p.name}/>)
 
     return (
         <nav className={s.nav}>
