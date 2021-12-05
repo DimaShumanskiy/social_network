@@ -4,12 +4,11 @@ import {rootReducerType} from "../../redux/redux-store";
 import {
     follow,
     setCurrentPage, setTotalUsersCount,
-    setUsers,
+    setUsers, toggleFollowingInProgress,
     toggleIsFetching,
     unFollow,
     UserType
 } from "../../redux/usersReducer";
-import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {usersAPI} from "../../api/api";
@@ -25,10 +24,12 @@ type UsersAPIComponentPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleFollowingInProgress:(isFetching: boolean, userId:number ) => void
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
     isFetching: boolean,
+    followingInProgress:number[]
 }
 
 class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType> {
@@ -70,6 +71,8 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType> {
                     onPageChanged={this.onPageChanged}
                     unFollow={this.props.unFollow}
                     follow={this.props.follow}
+                    toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                    followingInProgress={this.props.followingInProgress}
                 />}
 
         </>
@@ -84,6 +87,7 @@ type MapStatePropsType = {
     totalUsersCount: number,
     currentPage: number,
     isFetching: boolean,
+    followingInProgress:number[],
 }
 
 
@@ -94,6 +98,7 @@ const mapStateToProps = (state: rootReducerType): MapStatePropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
@@ -107,6 +112,7 @@ const UsersContainer = connect(mapStateToProps,
         setCurrentPage,
         setTotalUsersCount,
         toggleIsFetching,
+        toggleFollowingInProgress
     }
 )(UsersAPIComponent)
 
