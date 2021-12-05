@@ -12,6 +12,9 @@ import {
 import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
+
+
 
 // UsersAPIComponent -> Users
 type UsersAPIComponentPropsType = {
@@ -35,25 +38,23 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        })
-            .then(response => {
+
+        usersAPI.getUsers(this.props.currentPage,this.props.pageSize)
+            .then(data => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(data.items)
+                this.props.setTotalUsersCount(data.totalCount)
             })
     }
 
     onPageChanged = (pagesNumber: number) => {
         this.props.setCurrentPage(pagesNumber)
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pagesNumber}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        })
-            .then(response => {
+
+        usersAPI.getUsers(pagesNumber,this.props.pageSize) //getUsers file api- запрос на сервер(промис)
+            .then(data => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 
