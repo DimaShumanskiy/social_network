@@ -3,7 +3,6 @@ import s from "./Users.module.css";
 import userPhoto from "../../assets/images/img_avatar.png";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 
 type UsersPropsType = {
@@ -11,11 +10,11 @@ type UsersPropsType = {
     pageSize: number,
     onPageChanged: (pagesNumber: number) => void
     currentPage: number,
+
     users: UserType[]
     follow: (userId: number) => void
     unFollow: (userId: number) => void
-    toggleFollowingInProgress:(isFetching: boolean,userId:number) => void
-    followingInProgress:number[]
+    followingInProgress: number[]
 }
 
 
@@ -39,65 +38,44 @@ const Users = (props: UsersPropsType) => {
                                  }}
                     >{pages}</span>
                 })}
-
-
             </div>
             {/*<button onClick={this.getUsers}>Get Users</button>*/}
-            {
-                props.users.map(user =>
-                    <div key={user.id}>
-                        <div className={s.itemUser}>
-                            <div className={s.left}>
-                                <NavLink to={'/profile/' + user.id}>
-                                    <img src={user.photos.small != null ? user.photos.small : userPhoto} alt=""
-                                         className={s.avatar}/>
-                                </NavLink>
-                                <div>
-                                    {user.followed
-                                        //@ts-ignore
-                                        ? <button disabled={props.followingInProgress.some( id => id === user.id)}
-                                            onClick={() => {
-                                                props.toggleFollowingInProgress(true, user.id) // логика disabled
-                                                usersAPI.unFollowUser(user.id)
-                                                    .then(response => {
-                                                        if (response.data.resultCode === 0) {
-                                                            props.unFollow(user.id)
-                                                        }
-                                                        props.toggleFollowingInProgress(false, user.id) // когда запрос выполнится идет !disabled
-                                                    })
-                                            }}
-                                            className={s.btn}>Unfollow</button>
-
-                                        : <button disabled={props.followingInProgress.some( id => id === user.id)}
-                                            onClick={() => {
-                                                props.toggleFollowingInProgress(true, user.id)
-                                                usersAPI.followUser(user.id)
-                                                    .then(response => {
-                                                        if (response.data.resultCode === 0) {
-                                                            props.follow(user.id)
-
-                                                        }
-                                                        props.toggleFollowingInProgress(false, user.id)
-                                                    })
-                                            }}
-                                            className={s.btn}
-                                        >Follow</button>
-                                    }
-                                </div>
-                            </div>
-                            <div className={s.content}>
-                                <div className={s.infoUser}>
-                                    <h3>{user.name}</h3>
-                                    <h5>{user.status}</h5>
-                                </div>
-                                <div className={s.locationUser}>
-                                    <h3>{'user.location.country'}</h3>
-                                    <h5>{'user.location.city'}</h5>
-                                </div>
+            {props.users.map(user =>
+                <div key={user.id}>
+                    <div className={s.itemUser}>
+                        <div className={s.left}>
+                            <NavLink to={'/profile/' + user.id}>
+                                <img src={user.photos.small != null ? user.photos.small : userPhoto} alt=""
+                                     className={s.avatar}/>
+                            </NavLink>
+                            <div>
+                                {user.followed
+                                    ? <button disabled={props.followingInProgress.some(id => id === user.id)}
+                                              onClick={() => {
+                                                  props.unFollow(user.id)
+                                              }}
+                                              className={s.btn}>Unfollow</button>
+                                    : <button disabled={props.followingInProgress.some(id => id === user.id)}
+                                              onClick={() => {
+                                                  props.follow(user.id)
+                                              }}
+                                              className={s.btn}
+                                    >Follow</button>
+                                }
                             </div>
                         </div>
-                    </div>)
-            }
+                        <div className={s.content}>
+                            <div className={s.infoUser}>
+                                <h3>{user.name}</h3>
+                                <h5>{user.status}</h5>
+                            </div>
+                            <div className={s.locationUser}>
+                                <h3>{'user.location.country'}</h3>
+                                <h5>{'user.location.city'}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>)}
         </div>
     );
 }

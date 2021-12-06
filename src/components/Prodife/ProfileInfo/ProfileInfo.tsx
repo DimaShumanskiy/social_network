@@ -26,11 +26,11 @@ function ProfileInfo(props: ProfileInfoType) {
                     <span>{props.profile.aboutMe}</span>
                     <h3>{props.profile.fullName}</h3>
                 </div>
-                {/*<ul className={s.contact}>*/}
-                {/*    <li><a href={props.profile.contacts.facebook}>facebook</a></li>*/}
-                {/*    <li><a href={props.profile.contacts.vk}>vk</a></li>*/}
-                {/*    <li><a href={props.profile.contacts.instagram}>instagram</a></li>*/}
-                {/*</ul>*/}
+                <ul className={s.contact}>
+                    <li><a href={props.profile.contacts.facebook}>facebook</a></li>
+                    <li><a href={props.profile.contacts.vk}>vk</a></li>
+                    <li><a href={props.profile.contacts.instagram}>instagram</a></li>
+                </ul>
             </div>
         </div>
     )

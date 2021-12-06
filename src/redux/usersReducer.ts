@@ -1,3 +1,7 @@
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
+
+
 let initialState: InitialStateType = {
     users: [],
     pageSize: 5,
@@ -37,8 +41,9 @@ type InitialStateType = {
     followingInProgress: number[]
 }
 
-type UsersActionTypes = ReturnType<typeof follow>
-    | ReturnType<typeof unFollow>
+type UsersActionTypes =
+    ReturnType<typeof followSuccess>
+    | ReturnType<typeof unFollowSuccess>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
@@ -80,18 +85,18 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
                 ...state,
                 followingInProgress: action.isFetching
                     ? [...state.followingInProgress, action.userId]
-                    :state.followingInProgress.filter(id => id !== action.userId)
+                    : state.followingInProgress.filter(id => id !== action.userId)
             }
         default:
             return state
     }
 }
 
-export const follow = (userId: number) => ({
+export const followSuccess = (userId: number) => ({
     type: 'FOLLOW',
     userId,
 }) as const
-export const unFollow = (userId: number) => ({
+export const unFollowSuccess = (userId: number) => ({
     type: 'UN-FOLLOW',
     userId,
 }) as const
@@ -106,10 +111,64 @@ export const setTotalUsersCount = (totalUsersCount: number) => ({
     type: 'SET-USERS-TOTAL-COUNT', totalUsersCount
 }) as const
 export const toggleIsFetching = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', isFetching}) as const
-export const toggleFollowingInProgress = (isFetching: boolean ,userId:number) => ({
+export const toggleFollowingInProgress = (isFetching: boolean, userId: number) => ({
     type: 'TOGGLE-IS-FETCHING-PROGRESS',
     isFetching,
     userId
-})as const
+}) as const
+
+// redux - thunk  //getUserThunkCreator
+
+export const getUsers = (currentPage: number, pageSize: number) => { // оборачиваем thunk другой функцией getUserThunkCreator которая давет возможность принимать наши пропсы
+    return (dispatch: Dispatch<UsersActionTypes>) => {
+        dispatch(toggleIsFetching(true)) // берет из замыкания
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+            })
+    }
+}
+export const getPageUsers = (pagesNumber: number, pageSize: number) => { // для определения страницы
+    return (dispatch: Dispatch<UsersActionTypes>) => {
+        dispatch(setCurrentPage(pagesNumber))
+        dispatch(toggleIsFetching(true))
+        usersAPI.getUsers(pagesNumber, pageSize)
+            .then(data => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(data.items))
+            })
+    }
+}
+
+
+// санки для подписки и отписки
+export const follow = (userId: number ) => {
+    return (dispatch: Dispatch<UsersActionTypes>) => {
+       dispatch(toggleFollowingInProgress(true, userId))
+        usersAPI.followUser(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followSuccess(userId))
+                }
+                dispatch(toggleFollowingInProgress(false, userId))
+            })
+    }
+}
+export const unFollow = (userId: number ) => {
+    return (dispatch: Dispatch<UsersActionTypes>) => {
+       dispatch(toggleFollowingInProgress(true, userId))
+        usersAPI.unFollowUser(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unFollowSuccess(userId))
+                }
+                dispatch(toggleFollowingInProgress(false, userId))
+            })
+    }
+}
+
+
 export default usersReducer;
 

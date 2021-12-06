@@ -1,10 +1,11 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import sideBarReducer from "./sideBarReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
-
+import thunkMiddleware from "redux-thunk"  // санковый Middleware - это не thunk - это промежуточный уровень
+//который внедряем в наш стор
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
@@ -14,7 +15,7 @@ let reducers = combineReducers({
 })
 
 export type rootReducerType = ReturnType<typeof reducers>
-export const store = createStore(reducers)
+export const store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 //@ts-ignore
 window.store = store
