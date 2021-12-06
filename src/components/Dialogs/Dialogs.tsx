@@ -2,12 +2,14 @@ import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css"
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogsItem";
-import {ActionsTypes, DialogsPageType} from "../../redux/store";
+import { DialogsPageType} from "../../redux/store";
+import {Redirect} from "react-router-dom";
 
 type PropsDialogsType = {
     dialogsPage: DialogsPageType
     sendMessage: () => void
     updateNewMessageBody:(body: string) => void
+    isAuth: boolean
 }
 
 const Dialogs = (props: PropsDialogsType) => {
@@ -25,6 +27,7 @@ const Dialogs = (props: PropsDialogsType) => {
         props.updateNewMessageBody(e.currentTarget.value)
         // props.dispatch(updateNewMessageBodyCreator(e.currentTarget.value))
     }
+    if (!props.isAuth) return <Redirect to={'/login'}/> // !props.isAuth -  props.isAuth === false
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
