@@ -30,7 +30,6 @@ class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType> {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
     onPageChanged = (pagesNumber: number) => {
-
         this.props.getPageUsers(pagesNumber, this.props.pageSize)
     }
 

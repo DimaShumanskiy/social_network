@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 let initialState: InitialStateType = {
     posts: [
@@ -9,9 +11,9 @@ let initialState: InitialStateType = {
 }
 
 type InitialStateType = {
-    posts:Array<PostType>,
+    posts: Array<PostType>,
     newPostText: string,
-    profile: null | ProfileType
+    profile: ProfileType | null
 }
 type PostType = {
     id: number,
@@ -23,8 +25,8 @@ export type ProfileType = {
     userId: string
     aboutMe: string,
     lookingForAJob: boolean,
-    lookingForAJobDescription:string,
-    fullName:string,
+    lookingForAJobDescription: string,
+    fullName: string,
     contacts: ContactsType,
     photos: PhotosType,
 }
@@ -47,7 +49,7 @@ type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof changeNewActionCreator>
     | ReturnType<typeof setUserProfile>
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes):InitialStateType => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case 'ADD-POST': {
             let newPost: PostType = {
@@ -62,14 +64,16 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
             }
         }
         case 'UPDATE-NEW-POST-TEXT' : {
-             return {
+            return {
                 ...state,
                 newPostText: action.newText
             }
         }
         case 'SET-USER-PROFILE' : {
-            return {...state,
-                profile: action.profile}
+            return {
+                ...state,
+                profile: action.profile
+            }
         }
         default:
             return state
@@ -79,12 +83,23 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
 export const addPostActionCreator = (postText: string) => ({
     type: 'ADD-POST',
     postText: postText
-} )as const  // синтексис возварата без return , as const - определение константы
+}) as const  // синтексис возварата без return , as const - определение константы
 export const changeNewActionCreator = (newText: string) => ({
     type: "UPDATE-NEW-POST-TEXT",
     newText: newText
-} )as const
-export const setUserProfile = (profile:ProfileType) => ({type: 'SET-USER-PROFILE' , profile}) as const
+}) as const
+export const setUserProfile = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', profile}) as const
+
+//thunk
+
+export const getUserProfile = (userId: string) =>
+    (dispatch: Dispatch<ActionsTypes>) => {
+        usersAPI.profileUser(userId)
+            .then(response => {
+                dispatch(setUserProfile(response.data))
+            })
+    }
+
 
 export default profileReducer;
 
