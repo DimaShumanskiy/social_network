@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {rootReducerType} from "../../redux/redux-store";
 import {
@@ -8,6 +8,8 @@ import {
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 // UsersAPIComponent -> Users
@@ -75,48 +77,16 @@ const mapStateToProps = (state: rootReducerType): MapStatePropsType => {
     }
 }
 
-
-const UsersContainer = connect(mapStateToProps,
-    // mapDispatchToProps
-    {
-        follow,// thunk
-        unFollow,// thunk
-        getUsers,// thunk
-        getPageUsers,// thunk
-    }
+export default compose<ComponentType>(
+    WithAuthRedirect,
+    connect(mapStateToProps,
+        // mapDispatchToProps
+        {
+            follow,// thunk
+            unFollow,// thunk
+            getUsers,// thunk
+            getPageUsers,// thunk
+        }
+    )
 )(UsersAPIComponent)
 
-export default UsersContainer
-
-// type MapDispatchPropsType = {
-//     follow: (userId: number) => void
-//     unFollow: (userId: number) => void
-//     setUsers: (users: UserType[]) => void
-//     setCurrentPage: (currentPage: number) => void
-//     setTotalUsersCount: (totalUsersCount: number) => void
-//     toggleIsFetching: (isFetching: boolean) => void
-// }
-
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(followAC(userId))
-//         },
-//         unFollow: (userId: number) => {
-//             dispatch(unFollowAC(userId))
-//         },
-//         setUsers: (users: UserType[]) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (currentPage: number) => {
-//             dispatch(setCurrentPageAC(currentPage))
-//         },
-//         setTotalUsersCount: (totalUsersCount: number) => {
-//             dispatch(setUsersTotalCountAC(totalUsersCount))
-//         },
-//         toggleIsFetching: (isFetching: boolean) => {
-//             dispatch(toggleIsFetchingAC(isFetching))
-//         }
-//
-//     }
-// }
