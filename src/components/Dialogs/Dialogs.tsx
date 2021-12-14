@@ -1,29 +1,50 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./Dialogs.module.css"
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogsItem";
-import { DialogsPageType} from "../../redux/store";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {DialogsPageType} from "../../redux/dialogsReducer";
 
 type PropsDialogsType = {
     dialogsPage: DialogsPageType
-    sendMessage: () => void
-    updateNewMessageBody:(body: string) => void
+    sendMessage: (newMessageBody: string) => void
 }
+
+type FormDataType ={
+    newMessageBody: string
+}
+
+type AddMessageFormPropsType = {
+    newMessageBody?: string
+}
+const AddMessageForm: React.FC<InjectedFormProps<FormDataType, AddMessageFormPropsType>  & AddMessageFormPropsType> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field name={'newMessageBody'}
+                   component={'input'}
+                   type="text"
+                   placeholder={'Enter your message'}
+                   value={props.newMessageBody}
+                   />
+            <button
+            >Send</button>
+        </form>
+    )
+};
+
+const AddMessageReduxForm = reduxForm<FormDataType , AddMessageFormPropsType >({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 const Dialogs = (props: PropsDialogsType) => {
 
     let state = props.dialogsPage
 
-    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>);  //d- dialog
-    let messageElements = state.messages.map(m => <Message message={m.message} key={m.id}/>) // m - message
+    let dialogsElements = state.dialogs.map((d,i) => <DialogItem name={d.name} key={i} id={d.id}/>);  //d- dialog
+    let messageElements = state.messages.map((m, i) => <Message message={m.message} key={i}/>) // m - message
     const newMessageBody = state.newMessageBody;
 
-    const onSendMessageClick = () => {
-        props.sendMessage()
-    }
-    const onNewMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        props.updateNewMessageBody(e.currentTarget.value)
-        // props.dispatch(updateNewMessageBodyCreator(e.currentTarget.value))
+    const onSubmit = (value:FormDataType) => {//redux-form
+        console.log(value.newMessageBody)
+        props.sendMessage(value.newMessageBody)
     }
     return (
         <div className={s.dialogs}>
@@ -33,19 +54,14 @@ const Dialogs = (props: PropsDialogsType) => {
             <div className={s.messages}>
                 <div>{messageElements}</div>
                 <div>
-                    <div>
-                        <input value={newMessageBody}
-                               onChange={onNewMessageChange}
-                               placeholder='Enter your message'/>
-                    </div>
-                    <div>
-                        <button onClick={onSendMessageClick}>Send</button>
-                    </div>
+                    <AddMessageReduxForm
+                        newMessageBody={newMessageBody}
+                        onSubmit={onSubmit}
+                    />
                 </div>
             </div>
         </div>
 
     );
 }
-
 export default Dialogs;

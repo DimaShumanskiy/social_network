@@ -3,8 +3,8 @@
 //type post data "MyPost"
 
 
-import profileReducer, {addPostActionCreator, changeNewActionCreator} from "./profileReducer";
-import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogsReducer";
+import profileReducer, {addPostActionCreator,} from "./profileReducer";
+import dialogsReducer, {sendMessageCreator} from "./dialogsReducer";
 import sideBarReducer from "./sideBarReducer";
 
 export type PostType = {
@@ -20,14 +20,14 @@ export type MessageType = {
     id: number
     message: string
 }
-export type FriendsType = {
+type FriendsType = {
     id: number
     name: string
 }
 export type SideBarType = {
     friends: Array<FriendsType>
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageBody: string
@@ -51,7 +51,7 @@ export type StoreType = {
 }
 
 export type ActionsTypes =
-    | ReturnType<typeof updateNewMessageBodyCreator>
+    // | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
 
 let store: StoreType = {
@@ -103,8 +103,8 @@ let store: StoreType = {
     dispatch(action) {  // action это обьект который имеет {type: ' '}
 
         // this._state.profilePage = profileReducer(this._state.profilePage, action); // вынесли всю логику в reducer
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
-        this._state.sideBar = sideBarReducer(this._state.sideBar, action);
+        // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        // this._state.sideBar = sideBarReducer(this._state.sideBar, action);
 
         this._callSubscriber(store)
 

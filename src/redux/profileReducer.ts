@@ -6,18 +6,18 @@ let initialState: InitialStateType = {
         {id: 1, message: "Hi,how are you?", likesCount: 5},
         {id: 2, message: "It's my first post", likesCount: 11},
     ],
-    newPostText: '',
+    // newPostText: '',
     profile: null,
     status: ''
 }
 
 type InitialStateType = {
     posts: Array<PostType>,
-    newPostText: string,
+    newPostText?: string,
     profile: ProfileType | null,
     status: string
 }
-type PostType = {
+export type PostType = {
     id: number,
     message: string,
     likesCount: number
@@ -48,7 +48,7 @@ type PhotosType = {
 }
 
 type ActionsTypes = ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof changeNewActionCreator>
+    // | ReturnType<typeof changeNewActionCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
 
@@ -66,12 +66,12 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 newPostText: '',
             }
         }
-        case 'UPDATE-NEW-POST-TEXT' : {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        }
+        // case 'UPDATE-NEW-POST-TEXT' : {
+        //     return {
+        //         ...state,
+        //         newPostText: action.newText
+        //     }
+        // }
         case 'SET-USER-PROFILE' : {
             return {
                 ...state,
@@ -93,10 +93,10 @@ export const addPostActionCreator = (postText: string) => ({
     type: 'ADD-POST',
     postText: postText
 }) as const  // синтексис возварата без return , as const - определение константы
-export const changeNewActionCreator = (newText: string) => ({
-    type: "UPDATE-NEW-POST-TEXT",
-    newText: newText
-}) as const
+// export const changeNewActionCreator = (newText: string) => ({
+//     type: "UPDATE-NEW-POST-TEXT",
+//     newText: newText
+// }) as const
 export const setUserProfile = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', profile}) as const
 export const setStatus = (status: string) => ({type: 'SET-STATUS', status}) as  const
 //thunk
