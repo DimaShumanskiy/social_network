@@ -2,11 +2,12 @@ import React from 'react';
 import s from "./ProfileInfo.module.css"
 import {ProfileType} from "../../../redux/profileReducer";
 import Preloader from "../../common/Preloader/Preloader";
-import Profile from "../Profile";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 type ProfileInfoType = {
     profile: ProfileType | null
+    status: string
+    updateUserStatus:(status: string) => void
 }
 
 function ProfileInfo(props: ProfileInfoType) {
@@ -28,7 +29,7 @@ function ProfileInfo(props: ProfileInfoType) {
                     <span>{props.profile.aboutMe}</span>
                     <h3>{props.profile.fullName}</h3>
 
-                    <ProfileStatus status={'hello my friends'}/>
+                    <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
                 </div>
                 <ul className={s.contact}>
                     <li><a href={props.profile.contacts.facebook}>facebook</a></li>
