@@ -3,6 +3,7 @@ import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
 import {PostType} from "../../../redux/store";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../utils/validators/validators";
 
 
 type MyPostsType = {
@@ -13,6 +14,7 @@ type MyPostsType = {
 type FormDataType = {
     newPostMessage:string
 }
+const  maxLength10 = maxLengthCreator(10)
 
 const addNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
@@ -21,9 +23,10 @@ const addNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 name={'newPostMessage'}
                 component={'input'}
                 type="text"
+                validate={[required,maxLength10]}
             />
             <button>Add post</button>
-            <button>Remove</button>
+            {/*<button>Remove</button>*/}
         </form>
     );
 };
