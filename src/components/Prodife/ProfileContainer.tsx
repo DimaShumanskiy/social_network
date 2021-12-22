@@ -18,6 +18,8 @@ type ProfileContainerPropsType = {
     getUserProfile: (userId: string) => void
     getUserStatus: (userId: string) => void
     updateUserStatus:(status: string) => void
+    authorizedUserId: string
+    isAuth: boolean
 }
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType
@@ -27,7 +29,7 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '20564';
+            userId = this.props.authorizedUserId;
         }
         this.props.getUserProfile(userId)//получение профиля
         this.props.getUserStatus(userId) // получение статуса user
@@ -53,10 +55,15 @@ class ProfileContainer extends React.Component<PropsType> {
 type MapStatePropsType = {
     profile: ProfileType | null
     status: string
+    authorizedUserId: string
+    isAuth: boolean
 }
 const mapStateToProps = (state: rootReducerType): MapStatePropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    authorizedUserId: String(state.auth.data?.id),
+    isAuth: state.auth.isAuth
+
 })
 
 // //  WithUrlDataContainerComponent -> connect -> AuthRedirectComponent -> Profile -> ProfileInfo
