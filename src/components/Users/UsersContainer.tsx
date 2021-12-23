@@ -16,7 +16,7 @@ import {
     getFollowingInProgress,
     getPageSize,
     getTotalUsersCount,
-    getUsersData
+     getUsersDataSuper
 } from "../../redux/users_selectors";
 
 
@@ -80,7 +80,8 @@ type MapStatePropsType = {
 //которые в свою очередь берем из закомбайненого редьюсеров
 let mapStateToProps = (state: rootReducerType): MapStatePropsType => {
     return {
-        users: getUsersData(state),
+        // users: getUsersData(state),
+        users: getUsersDataSuper(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
