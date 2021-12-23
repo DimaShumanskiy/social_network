@@ -30,11 +30,14 @@ export const initializedSuccess = () => ({
 }) as const
 //
 // //thunk
-export const initialize = () =>
+export const initializeApp = () =>
     (dispatch: Dispatch<any>) => {
-        dispatch(getAuthUserData())
+        let promise = dispatch(getAuthUserData())
+        Promise.all([promise])
+            .then(() => {
+                dispatch(initializedSuccess())
+            })
 
-        dispatch(initializedSuccess())
     }
 
 

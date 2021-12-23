@@ -119,7 +119,7 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number) =
 
 // redux - thunk  //getUserThunkCreator
 
-export const getUsers = (currentPage: number, pageSize: number) => { // оборачиваем thunk другой функцией getUserThunkCreator которая давет возможность принимать наши пропсы
+export const requestUsers = (currentPage: number, pageSize: number) => { // оборачиваем thunk другой функцией getUserThunkCreator которая давет возможность принимать наши пропсы
     return (dispatch: Dispatch<UsersActionTypes>) => {
         dispatch(toggleIsFetching(true)) // берет из замыкания
         usersAPI.getUsers(currentPage, pageSize)

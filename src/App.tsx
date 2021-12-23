@@ -12,21 +12,28 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Prodife/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
-import { useDispatch} from "react-redux";
-import {getAuthUserData} from "./redux/authReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {initializeApp} from "./redux/appReducer";
+import {rootReducerType} from "./redux/redux-store";
+import Preloader from "./components/common/Preloader/Preloader";
 
 type AppPropsType = {
 }
 
 const App = (props:AppPropsType) =>{
 
+    const initialized = useSelector<rootReducerType,boolean>(state => state.app.initialized)
     const dispatch = useDispatch()
 
     useEffect(()=> {
-        dispatch(getAuthUserData())
+        dispatch(initializeApp())
     }, [])
 
+    if(!initialized){
+        return <Preloader/>
+    }
         return (
+
             <div className="app-wrapper">
                 <HeaderContainer/>
                 <NavbarContainer/>

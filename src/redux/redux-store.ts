@@ -5,7 +5,8 @@ import sideBarReducer from "./sideBarReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
 import { reducer as formReducer } from 'redux-form'
-import thunkMiddleware from "redux-thunk"  // санковый Middleware - это не thunk - это промежуточный уровень
+import thunkMiddleware from "redux-thunk"
+import appReducer from "./appReducer";  // санковый Middleware - это не thunk - это промежуточный уровень
 //который внедряем в наш стор
 let reducers = combineReducers({
     profilePage: profileReducer,
@@ -13,6 +14,7 @@ let reducers = combineReducers({
     sideBar: sideBarReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    app:appReducer,
     form: formReducer,
 })
 
