@@ -120,52 +120,42 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number) =
 // redux - thunk  //getUserThunkCreator
 
 export const requestUsers = (currentPage: number, pageSize: number) => { // оборачиваем thunk другой функцией getUserThunkCreator которая давет возможность принимать наши пропсы
-    return (dispatch: Dispatch<UsersActionTypes>) => {
+    return async (dispatch: Dispatch<UsersActionTypes>) => {
         dispatch(toggleIsFetching(true)) // берет из замыкания
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(toggleIsFetching(false))
-                dispatch(setUsers(data.items))
-                dispatch(setTotalUsersCount(data.totalCount))
-            })
+        let data = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(toggleIsFetching(false))
+        dispatch(setUsers(data.items))
+        dispatch(setTotalUsersCount(data.totalCount))
     }
 }
 export const getPageUsers = (pagesNumber: number, pageSize: number) => { // для определения страницы
-    return (dispatch: Dispatch<UsersActionTypes>) => {
+    return async (dispatch: Dispatch<UsersActionTypes>) => {
         dispatch(setCurrentPage(pagesNumber))
         dispatch(toggleIsFetching(true))
-        usersAPI.getUsers(pagesNumber, pageSize)
-            .then(data => {
-                dispatch(toggleIsFetching(false))
-                dispatch(setUsers(data.items))
-            })
+        let data = await usersAPI.getUsers(pagesNumber, pageSize)
+        dispatch(toggleIsFetching(false))
+        dispatch(setUsers(data.items))
     }
 }
 
 
 // санки для подписки и отписки
-export const follow = (userId: number ) => {
-    return (dispatch: Dispatch<UsersActionTypes>) => {
-       dispatch(toggleFollowingInProgress(true, userId))
-        usersAPI.followUser(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followSuccess(userId))
-                }
-                dispatch(toggleFollowingInProgress(false, userId))
-            })
+export const follow = (userId: number) => {
+    return async (dispatch: Dispatch<UsersActionTypes>) => {
+        dispatch(toggleFollowingInProgress(true, userId))
+        let response = await usersAPI.followUser(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(followSuccess(userId))}
+        dispatch(toggleFollowingInProgress(false, userId))
     }
 }
-export const unFollow = (userId: number ) => {
-    return (dispatch: Dispatch<UsersActionTypes>) => {
-       dispatch(toggleFollowingInProgress(true, userId))
-        usersAPI.unFollowUser(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unFollowSuccess(userId))
-                }
-                dispatch(toggleFollowingInProgress(false, userId))
-            })
+export const unFollow = (userId: number) => {
+    return async (dispatch: Dispatch<UsersActionTypes>) => {
+        dispatch(toggleFollowingInProgress(true, userId))
+        let response = await usersAPI.unFollowUser(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(unFollowSuccess(userId))}
+        dispatch(toggleFollowingInProgress(false, userId))
     }
 }
 
